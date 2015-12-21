@@ -1,0 +1,30 @@
+global:
+    resource: "@GlobalBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+ride:
+    resource: "@RideBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+car:
+    resource: "@CarBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+people:
+    resource: "@PeopleBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
