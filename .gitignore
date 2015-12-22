@@ -30,6 +30,7 @@
 # Composer PHAR
 /composer.phar
 
+public/.idea/
 .idea
 .vagrant
 .DS_Store
