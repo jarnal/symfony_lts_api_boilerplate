@@ -1,26 +1,8 @@
-global:
-    resource: "@GlobalBundle/Controller/"
-    type:     annotation
-    prefix:   /
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 
-ride:
-    resource: "@RideBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-car:
-    resource: "@CarBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-people:
-    resource: "@PeopleBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
@@ -28,3 +10,12 @@ fos_user:
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+css_security:
+    resource: "@RestSecurityBundle/Resources/config/routing_rest.yml"
+    type:     rest
+    prefix:   /api/

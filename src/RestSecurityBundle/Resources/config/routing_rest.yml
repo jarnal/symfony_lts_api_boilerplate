@@ -1,0 +1,4 @@
+css_security_security_rest:
+    type: rest
+    resource: "RestSecurityBundle:SecurityRest"
+    name_prefix: api_security_

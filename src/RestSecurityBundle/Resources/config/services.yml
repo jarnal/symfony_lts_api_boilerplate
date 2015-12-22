@@ -1,0 +1,22 @@
+parameters:
+
+    people_bundle.entity.user.class: PeopleBundle\Entity\User
+    people_bundle.entity.user.provider.class: PeopleBundle\Provider\UserProvider
+    security_bundle.security.service.class: RestSecurityBundle\Service\SecurityService
+
+services:
+
+    platform.user.repository:
+        class: PeopleBundle\Repository\UserRepository
+        factory: [@doctrine.orm.entity_manager, getRepository]
+        arguments: [%people_bundle.entity.user.class%]
+
+    platform.user.provider:
+        class: %people_bundle.entity.user.provider.class%
+        arguments: [@platform.user.repository]
+
+    platform.grant_type.api_key:
+        class: RestSecurityBundle\OAuth\ApiKeyGrantExtension
+        tags:
+            - { name: fos_oauth_server.grant_extension, uri: 'http://cabserviceserver.com/grants/api_key' }
+        arguments: [@platform.user.repository]

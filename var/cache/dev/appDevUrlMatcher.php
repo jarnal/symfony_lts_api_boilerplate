@@ -56,6 +56,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 }
 
+                // _profiler_purge
+                if ($pathinfo === '/_profiler/purge') {
+                    return array (  '_controller' => 'web_profiler.controller.profiler:purgeAction',  '_route' => '_profiler_purge',);
+                }
+
                 // _profiler_info
                 if (0 === strpos($pathinfo, '/_profiler/info') && preg_match('#^/_profiler/info/(?P<about>[^/]++)$#s', $pathinfo, $matches)) {
                     return $this->mergeDefaults(array_replace($matches, array('_route' => '_profiler_info')), array (  '_controller' => 'web_profiler.controller.profiler:infoAction',));
@@ -100,49 +105,29 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // global_default_index
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'global_default_index');
+        if (0 === strpos($pathinfo, '/oauth/v2')) {
+            // fos_oauth_server_token
+            if ($pathinfo === '/oauth/v2/token') {
+                if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
+                    goto not_fos_oauth_server_token;
+                }
+
+                return array (  '_controller' => 'fos_oauth_server.controller.token:tokenAction',  '_route' => 'fos_oauth_server_token',);
             }
+            not_fos_oauth_server_token:
 
-            return array (  '_controller' => 'GlobalBundle\\Controller\\DefaultController::indexAction',  '_route' => 'global_default_index',);
-        }
+            // fos_oauth_server_authorize
+            if ($pathinfo === '/oauth/v2/auth') {
+                if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
+                    goto not_fos_oauth_server_authorize;
+                }
 
-        // ride_default_index
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'ride_default_index');
+                return array (  '_controller' => 'FOS\\OAuthServerBundle\\Controller\\AuthorizeController::authorizeAction',  '_route' => 'fos_oauth_server_authorize',);
             }
+            not_fos_oauth_server_authorize:
 
-            return array (  '_controller' => 'RideBundle\\Controller\\DefaultController::indexAction',  '_route' => 'ride_default_index',);
-        }
-
-        // car_default_index
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'car_default_index');
-            }
-
-            return array (  '_controller' => 'CarBundle\\Controller\\DefaultController::indexAction',  '_route' => 'car_default_index',);
-        }
-
-        // people_default_index
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'people_default_index');
-            }
-
-            return array (  '_controller' => 'PeopleBundle\\Controller\\DefaultController::indexAction',  '_route' => 'people_default_index',);
-        }
-
-        // homepage
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'homepage');
-            }
-
-            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
         }
 
         if (0 === strpos($pathinfo, '/log')) {
@@ -341,6 +326,26 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'nelmio_api_doc_index')), array (  '_controller' => 'Nelmio\\ApiDocBundle\\Controller\\ApiDocController::indexAction',  'view' => 'default',));
         }
         not_nelmio_api_doc_index:
+
+        // homepage
+        if (rtrim($pathinfo, '/') === '') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'homepage');
+            }
+
+            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+        }
+
+        // api_security_credentials
+        if (0 === strpos($pathinfo, '/api/') && preg_match('#^/api/(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not_api_security_credentials;
+            }
+
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_security_credentials')), array (  '_controller' => 'RestSecurityBundle\\Controller\\SecurityRestController::credentialsAction',  '_format' => 'json',));
+        }
+        not_api_security_credentials:
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
