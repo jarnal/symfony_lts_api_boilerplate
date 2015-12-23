@@ -12,7 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class CreateClientCommand
- * @package TeamManager\PlayerBundle\Command
+ * Allows to create a new client allowed to connect to the API
+ * To create one simply issue in CLI :
+ * php bin/console css:oauth-server:client:create --redirect-uri="CLIENT_HOST" --grant-type="http://cabserviceserver.com/grants/api_key"
  */
 class CreateClientCommand extends ContainerAwareCommand
 {

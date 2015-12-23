@@ -137,3 +137,10 @@ fos_oauth_server:
         user_provider: platform.user.provider
         options:
             supported_scopes: user
+
+jms_serializer:
+    metadata:
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "%kernel.root_dir%/serializer/FOSUserBundle"

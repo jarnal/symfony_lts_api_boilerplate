@@ -10,4 +10,25 @@ namespace PeopleBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param $id
+     */
+    public function findOneById($id, $fullObject=true)
+    {
+        $query = $this->createQueryBuilder('user');
+        $query->where('user.id = :userID')
+            ->setParameter('userID', $id)
+        ;
+
+        if($fullObject){
+            //?
+        }
+        $result = $query->getQuery()->getResult();
+        if(isset($result[0])){
+            return $result[0];
+        }
+        return $query->getQuery()->getResult();
+    }
+
 }

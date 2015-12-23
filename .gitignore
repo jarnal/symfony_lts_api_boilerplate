@@ -5,7 +5,6 @@
 /var/SymfonyRequirements.php
 !var/cache/.gitkeep
 !var/logs/.gitkeep
-/tests/*
 
 # Parameters
 /app/config/parameters.yml

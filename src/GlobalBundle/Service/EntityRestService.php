@@ -131,8 +131,6 @@ abstract class EntityRestService implements EntityServiceInterface
         $form = $this->formFactory->create(new $this->formType(), $entity, array('method' => $pMethod));
         $form->submit($pParameters, 'PUT'!=$pMethod);
 
-        //throw new \Exception($entity->getPassword());
-
         if ($this->isFormValid($form)) {
 
             $entity = $form->getData();

@@ -17,13 +17,22 @@ class UserType extends AbstractType
         $builder
             //->add('firstname')
             //->add('lastname')
-            ->add('username')
+            /*->add('username')
             ->add('password')
             ->add('email')
+            ->add('emailCanonical')*/
             /*->add('image_url')
             ->add('jersey_number')
             ->add('level')*/
         ;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParent()
+    {
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
     }
 
     /**

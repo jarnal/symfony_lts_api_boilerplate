@@ -9,12 +9,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use GlobalBundle\Service\EntityRestService;
 
+/**
+ * Class UserService
+ * @package PeopleBundle\Service
+ *
+ * Service allowing to handle users across the application
+ */
 class UserService extends EntityRestService
 {
 
     protected $encoderFactory;
 
     /**
+     * Constructor
+     *
      * @param ObjectManager $pEntityManager
      * @param FormFactoryInterface $pFormFactory
      * @param $pEntityClass
@@ -53,6 +61,8 @@ class UserService extends EntityRestService
     }
 
     /**
+     * Returns a user by his username and password.
+     *
      * @param $login
      * @param $password
      * @return object
@@ -68,6 +78,8 @@ class UserService extends EntityRestService
     }
 
     /**
+     * Returns a user or a NotFoundHttpException depending if user exists or not.
+     *
      * @param $login
      * @param $password
      * @return User

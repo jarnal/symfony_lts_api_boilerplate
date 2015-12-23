@@ -6,15 +6,18 @@ parameters:
 
 services:
 
+    #User repository service
     platform.user.repository:
         class: PeopleBundle\Repository\UserRepository
         factory: [@doctrine.orm.entity_manager, getRepository]
         arguments: [%people_bundle.entity.user.class%]
 
+    #User provider service
     platform.user.provider:
         class: %people_bundle.entity.user.provider.class%
         arguments: [@platform.user.repository]
 
+    #ApiKey grant type service for OAuth
     platform.grant_type.api_key:
         class: RestSecurityBundle\OAuth\ApiKeyGrantExtension
         tags:

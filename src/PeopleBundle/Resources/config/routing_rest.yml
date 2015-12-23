@@ -1,0 +1,5 @@
+css_people_user_rest:
+    type: rest
+    resource: "PeopleBundle:UserRest"
+    name_prefix: api_user_
+    prefix: user
