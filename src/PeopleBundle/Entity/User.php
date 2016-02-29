@@ -36,25 +36,23 @@ class User extends BaseUser
      * First name of the user.
      *
      * @var string
-     * @ORM\Column(name="firstname", type="string")
-     * @Assert\NotBlank( message="form.player.firstname.blank" )
-     * @Assert\NotNull( message="form.player.firstname.null" )
+     * @ORM\Column(name="firstname", type="string", nullable=true)
      *
      * @Groups({"UserGlobal","UserDetails"})
      * @Expose
      */
-    private $firstname;
+    private $firstname = "";
 
     /**
      * Last name of the user.
      *
      * @var string
-     * @ORM\Column(name="lastname", type="string")
+     * @ORM\Column(name="lastname", type="string", nullable=true)
      *
      * @Groups({"UserGlobal","UserDetails"})
      * @Expose
      */
-    private $lastname;
+    private $lastname = "";
 
     /**
      * Api key of the user.
@@ -63,7 +61,7 @@ class User extends BaseUser
      * @ORM\Column(name="api_key", type="string", nullable=true)
      *
      */
-    private $api_key;
+    private $api_key = "";
 
     /**
      * Get id
